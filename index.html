@@ -8,22 +8,25 @@
     <title>arqMHOR | Arquitectura Forense y Consultoría Profesional</title>
     
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --azul-oscuro: #1a2332;
-            --azul-medio: #2c3e50;
+            --azul-oscuro: #0f1923;
+            --azul-medio: #1a2d3d;
+            --azul-header: #1e3347;
             --gris-platino: #8a949e;
             --gris-claro: #f5f7fa;
+            --gris-medio: #e8ecf0;
             --blanco: #ffffff;
             --dorado: #c9a961;
-            --dorado-oscuro: #b8944f;
+            --dorado-claro: #d4b87a;
+            --beige: #c4b89a;
             --texto-principal: #2c3e50;
             --texto-secundario: #5a6c7d;
         }
@@ -45,168 +48,166 @@
             background-color: var(--blanco);
         }
 
-        /* HEADER */
-        header {
-            background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%);
-            color: var(--blanco);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header-top-bar {
-            background-color: rgba(255,255,255,0.05);
-            padding: 10px 0;
-            font-size: 0.85rem;
+        /* HEADER SUPERIOR - Credenciales */
+        .header-credentials {
+            background: var(--azul-oscuro);
+            padding: 8px 0;
+            font-size: 0.8rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .container {
+        .credentials-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-        }
-
-        .header-top-content {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .credentials {
-            display: flex;
-            gap: 25px;
+            justify-content: center;
+            gap: 30px;
             flex-wrap: wrap;
         }
 
         .credential-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-
-        .credential-label {
-            color: var(--dorado);
-            font-weight: 600;
-        }
-
-        .credential-value {
             color: var(--gris-platino);
             font-weight: 500;
+        }
+
+        .credential-item strong {
+            color: var(--dorado);
+            font-weight: 700;
+        }
+
+        /* HEADER PRINCIPAL */
+        header {
+            background: var(--azul-header);
+            color: var(--blanco);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-box {
+            width: 50px;
+            height: 50px;
+            background: #6b7280;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-box svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-text-container h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--blanco);
+            line-height: 1;
+        }
+
+        .logo-text-container h1 .arq {
+            color: var(--blanco);
+            font-weight: 400;
+        }
+
+        .logo-text-container h1 .mhor {
+            color: var(--blanco);
+            font-weight: 700;
+        }
+
+        .logo-text-container h1 .mh {
+            color: var(--dorado);
+        }
+
+        .logo-text-container .subtitle {
+            font-size: 0.65rem;
+            color: var(--gris-platino);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 3px;
         }
 
         .header-contact {
             display: flex;
             gap: 25px;
             align-items: center;
+            font-size: 0.9rem;
         }
 
-        .header-contact-item {
+        .header-contact a {
+            color: var(--blanco);
+            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--blanco);
-            text-decoration: none;
             transition: color 0.3s;
         }
 
-        .header-contact-item:hover {
+        .header-contact a:hover {
             color: var(--dorado);
         }
 
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-img svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .logo-text h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--blanco);
-            line-height: 1;
-        }
-
-        .logo-text h1 span {
-            color: var(--dorado);
-            font-weight: 300;
-        }
-
-        .logo-text span {
-            font-size: 0.7rem;
-            color: var(--gris-platino);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            margin-top: 3px;
+        /* NAVEGACIÓN */
+        nav {
+            background: var(--azul-medio);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
         nav ul {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             list-style: none;
-            gap: 30px;
+            justify-content: flex-end;
+            gap: 35px;
         }
 
         nav a {
             color: var(--blanco);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            padding: 15px 0;
+            display: block;
+            transition: color 0.3s;
+            border-bottom: 2px solid transparent;
         }
 
         nav a:hover {
             color: var(--dorado);
+            border-bottom-color: var(--dorado);
         }
 
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .mobile-menu span {
-            width: 25px;
-            height: 3px;
-            background: var(--blanco);
-            transition: 0.3s;
-        }
-
-        /* HERO */
+        /* HERO SECTION */
         .hero {
-            margin-top: 140px;
-            background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%);
+            background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 50%, var(--azul-header) 100%);
             color: var(--blanco);
-            padding: 100px 0;
+            padding: 120px 0;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
@@ -218,76 +219,81 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" x="0" y="0" width="100" height="100"/></svg>');
-            background-size: 50px 50px;
-            opacity: 0.3;
+            background: radial-gradient(circle at 50% 50%, rgba(201, 169, 97, 0.05) 0%, transparent 70%);
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
             max-width: 900px;
-            text-align: center;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .hero-subtitle {
+        .hero-subtitle-top {
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
             color: var(--dorado);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 600;
             margin-bottom: 20px;
-            display: block;
+            display: inline-block;
+            border-bottom: 2px solid var(--dorado);
+            padding-bottom: 10px;
         }
 
         .hero h2 {
-            font-size: 2.8rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             line-height: 1.2;
-            letter-spacing: 1px;
+            color: var(--blanco);
         }
 
-        .hero h2 span {
+        .hero h2 .highlight {
             color: var(--dorado);
-            font-weight: 300;
         }
 
         .hero p {
             font-size: 1.1rem;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             color: var(--gris-platino);
             line-height: 1.8;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            font-weight: 300;
         }
 
         .cta-button {
             display: inline-block;
-            background: var(--dorado);
+            background: var(--beige);
             color: var(--azul-oscuro);
-            padding: 18px 45px;
+            padding: 20px 60px;
             text-decoration: none;
-            font-weight: 600;
-            border-radius: 4px;
-            transition: all 0.3s;
+            font-weight: 700;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border: 2px solid var(--dorado);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
         .cta-button:hover {
-            background: transparent;
-            color: var(--dorado);
+            background: var(--dorado);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         /* SERVICIOS */
         .services {
-            padding: 80px 0;
+            padding: 100px 0;
             background: var(--gris-claro);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .section-title {
@@ -296,7 +302,8 @@
         }
 
         .section-title h3 {
-            font-size: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
             color: var(--azul-oscuro);
             margin-bottom: 15px;
             font-weight: 700;
@@ -337,21 +344,22 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
-            color: var(--dorado);
             font-size: 1.5rem;
         }
 
         .service-card h4 {
-            font-size: 1.3rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
             color: var(--azul-oscuro);
             margin-bottom: 15px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .service-card p {
             color: var(--texto-secundario);
             font-size: 0.95rem;
             line-height: 1.8;
+            margin-bottom: 15px;
         }
 
         .norm-reference {
@@ -362,13 +370,12 @@
             font-size: 0.8rem;
             color: var(--azul-medio);
             font-weight: 600;
-            margin-top: 15px;
             border-left: 3px solid var(--dorado);
         }
 
         /* UBICACIÓN Y MAPA */
         .location {
-            padding: 80px 0;
+            padding: 100px 0;
             background: var(--blanco);
         }
 
@@ -380,20 +387,15 @@
         }
 
         .location-info h3 {
-            font-size: 1.8rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
             color: var(--azul-oscuro);
-            margin-bottom: 20px;
-        }
-
-        .location-details {
             margin-bottom: 30px;
         }
 
         .location-item {
-            display: flex;
-            gap: 15px;
             margin-bottom: 20px;
-            padding: 20px;
+            padding: 25px;
             background: var(--gris-claro);
             border-radius: 8px;
             border-left: 4px solid var(--dorado);
@@ -402,86 +404,87 @@
         .location-item strong {
             color: var(--azul-oscuro);
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
 
         .location-item span {
             color: var(--texto-secundario);
             font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        /* MAPA */
-        #map {
-            height: 600px;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            z-index: 1;
+        /* MAPA CONTENEDOR */
+        .map-section {
+            background: var(--blanco);
             border: 2px solid var(--azul-oscuro);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
 
-        .map-container {
-            position: relative;
+        .map-header {
+            background: var(--azul-oscuro);
+            color: var(--blanco);
+            padding: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .map-watermark {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(255,255,255,0.95);
-            padding: 10px 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        #map {
+            height: 500px;
+            width: 100%;
+            background: #e8ecf0;
         }
 
-        .map-watermark svg {
-            width: 40px;
-            height: 40px;
+        .map-footer {
+            padding: 20px;
+            background: var(--gris-claro);
+            border-top: 1px solid var(--gris-medio);
         }
 
-        .map-watermark-text {
-            font-size: 0.75rem;
+        .map-footer p {
+            font-size: 0.85rem;
+            color: var(--texto-secundario);
+            line-height: 1.6;
+        }
+
+        .map-footer strong {
             color: var(--azul-oscuro);
-            font-weight: 600;
-        }
-
-        .map-watermark-text span {
-            display: block;
-            font-size: 0.65rem;
-            color: var(--gris-platino);
-            font-weight: 400;
         }
 
         .isochrone-legend {
             background: var(--azul-oscuro);
             color: var(--blanco);
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .isochrone-legend h4 {
             color: var(--dorado);
             margin-bottom: 15px;
             font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
         }
 
         .zone-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 12px;
             font-size: 0.9rem;
         }
 
         .zone-dot {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             border: 2px solid;
+            flex-shrink: 0;
         }
 
         .zone-local { border-color: #4CAF50; background: rgba(76, 175, 80, 0.3); }
@@ -490,7 +493,7 @@
 
         /* CONTACTO */
         .contact {
-            padding: 80px 0;
+            padding: 100px 0;
             background: var(--gris-claro);
         }
 
@@ -505,6 +508,13 @@
             padding: 40px;
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .contact-form h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--azul-oscuro);
+            margin-bottom: 30px;
+            font-size: 1.5rem;
         }
 
         .form-group {
@@ -524,7 +534,7 @@
         .form-group textarea {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #e0e6ed;
+            border: 2px solid var(--gris-medio);
             border-radius: 4px;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem;
@@ -563,13 +573,14 @@
         }
 
         .contact-info-side h3 {
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
             color: var(--azul-oscuro);
             margin-bottom: 30px;
         }
 
         .contact-method {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding: 25px;
             background: var(--blanco);
             border-radius: 8px;
@@ -579,15 +590,14 @@
         .contact-method h4 {
             color: var(--azul-oscuro);
             margin-bottom: 10px;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .contact-method a,
         .contact-method p {
             color: var(--texto-secundario);
             text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
+            font-size: 0.95rem;
         }
 
         .contact-method a:hover {
@@ -600,10 +610,6 @@
             color: var(--blanco);
             padding: 40px 0 20px;
             text-align: center;
-        }
-
-        .footer-content {
-            margin-bottom: 30px;
         }
 
         .footer-credentials {
@@ -634,25 +640,17 @@
                 grid-template-columns: 1fr;
             }
 
-            nav {
-                display: none;
-            }
-
-            .mobile-menu {
-                display: flex;
-            }
-
-            .hero {
-                margin-top: 120px;
-                padding: 60px 0;
-            }
-
             .hero h2 {
                 font-size: 2rem;
             }
 
-            .credentials {
+            .header-contact {
                 display: none;
+            }
+
+            nav ul {
+                justify-content: center;
+                gap: 20px;
             }
 
             #map {
@@ -665,49 +663,25 @@
                 font-size: 1.5rem;
             }
 
-            .section-title h3 {
-                font-size: 1.5rem;
+            .credentials-container {
+                gap: 15px;
+                font-size: 0.7rem;
             }
 
-            .service-card {
-                padding: 30px 20px;
-            }
-
-            .header-contact {
-                display: none;
+            nav ul {
+                flex-wrap: wrap;
             }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .service-card,
-        .location-item,
-        .contact-method {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        /* Custom Leaflet Styles */
-        .custom-div-icon {
-            background: transparent;
-            border: none;
-        }
-
+        /* Leaflet Custom Styles */
         .leaflet-control-zoom {
             border: 2px solid var(--azul-oscuro) !important;
-            border-radius: 5px !important;
+            border-radius: 4px !important;
         }
 
         .leaflet-control-zoom a {
             color: var(--azul-oscuro) !important;
             font-weight: bold !important;
-        }
-
-        .leaflet-control-zoom a:hover {
-            background: var(--dorado) !important;
-            color: var(--blanco) !important;
         }
 
         .leaflet-popup-content-wrapper {
@@ -719,115 +693,76 @@
             font-family: 'Montserrat', sans-serif;
             margin: 15px;
         }
-
-        .leaflet-control-scale-line {
-            background: rgba(255,255,255,0.8) !important;
-            border: 2px solid var(--azul-oscuro) !important;
-            color: var(--azul-oscuro) !important;
-            font-weight: bold !important;
-        }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- HEADER CREDENCIALES -->
+    <div class="header-credentials">
+        <div class="credentials-container">
+            <div class="credential-item">CIV <strong>280.406</strong></div>
+            <div class="credential-item">CAV <strong>8.213</strong></div>
+            <div class="credential-item">ASAPROVE <strong>4.050</strong></div>
+            <div class="credential-item">SUDEBAN <strong>5.678</strong></div>
+            <div class="credential-item">SUDEBIP <strong>728</strong></div>
+        </div>
+    </div>
+
+    <!-- HEADER PRINCIPAL -->
     <header>
-        <div class="header-top-bar">
-            <div class="container">
-                <div class="header-top-content">
-                    <div class="credentials">
-                        <div class="credential-item">
-                            <span class="credential-label">CIV</span>
-                            <span class="credential-value">280.406</span>
-                        </div>
-                        <div class="credential-item">
-                            <span class="credential-label">CAV</span>
-                            <span class="credential-value">8.213</span>
-                        </div>
-                        <div class="credential-item">
-                            <span class="credential-label">ASAPROVE</span>
-                            <span class="credential-value">4.050</span>
-                        </div>
-                        <div class="credential-item">
-                            <span class="credential-label">SUDEBAN</span>
-                            <span class="credential-value">5.678</span>
-                        </div>
-                        <div class="credential-item">
-                            <span class="credential-label">SUDEBIP</span>
-                            <span class="credential-value">728</span>
-                        </div>
-                    </div>
-                    <div class="header-contact">
-                        <a href="tel:+5804261352908" class="header-contact-item">
-                            <span>📞</span>
-                            <span>+58 (0426) 1352908</span>
-                        </a>
-                        <a href="mailto:arqmhor2660@gmail.com" class="header-contact-item">
-                            <span>✉️</span>
-                            <span>arqmhor2660@gmail.com</span>
-                        </a>
-                    </div>
+        <div class="header-main">
+            <div class="logo-container">
+                <div class="logo-box">
+                    <!-- Logo Corporativo arqMHOR - Figura Arquitecto -->
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Fondo gris -->
+                        <rect fill="#6b7280" width="100" height="100"/>
+                        
+                        <!-- Círculo superior (cabeza/casco) -->
+                        <circle cx="50" cy="28" r="12" fill="#ffffff"/>
+                        
+                        <!-- Cuerpo con M estilizada -->
+                        <path d="M 30 45 L 30 70 L 38 70 L 38 55 L 50 65 L 62 55 L 62 70 L 70 70 L 70 45 L 62 45 L 50 58 L 38 45 Z" fill="#ffffff"/>
+                        
+                        <!-- Línea divisoria -->
+                        <rect x="20" y="72" width="60" height="3" fill="#ffffff"/>
+                        
+                        <!-- Grid inferior 3 cuadrados -->
+                        <rect x="20" y="77" width="18" height="18" fill="#9ca3af"/>
+                        <rect x="41" y="77" width="18" height="18" fill="#9ca3af"/>
+                        <rect x="62" y="77" width="18" height="18" fill="#9ca3af"/>
+                        
+                        <!-- Círculo esquina inferior derecha -->
+                        <circle cx="82" cy="88" r="6" fill="#ffffff"/>
+                    </svg>
+                </div>
+                <div class="logo-text-container">
+                    <h1><span class="arq">arq</span><span class="mhor"><span class="mh">MH</span>OR</span></h1>
+                    <div class="subtitle">Arq. Oswaldo Rafael Martínez Hidalgo</div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="main-header">
-                <div class="logo">
-                    <div class="logo-img">
-                        <!-- Logo Corporativo arqMHOR -->
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Fondo gris -->
-                            <rect fill="#999" width="100" height="100"/>
-                            
-                            <!-- Círculo superior blanco -->
-                            <circle cx="50" cy="28" r="12" fill="#fff"/>
-                            
-                            <!-- Forma de M estilizada (estructura arquitectónica) -->
-                            <path d="M 35 42 L 35 68 L 42 68 L 42 52 L 50 60 L 58 52 L 58 68 L 65 68 L 65 42 Z" fill="#fff"/>
-                            
-                            <!-- Línea horizontal divisoria -->
-                            <rect x="25" y="71" width="50" height="3" fill="#fff"/>
-                            
-                            <!-- Grid inferior - 3 rectángulos -->
-                            <rect x="25" y="76" width="22" height="20" fill="#bbb"/>
-                            <rect x="49" y="76" width="22" height="20" fill="#bbb"/>
-                            <rect x="73" y="76" width="2" height="20" fill="#fff"/>
-                            
-                            <!-- Círculo inferior derecho -->
-                            <circle cx="82" cy="86" r="6" fill="#fff"/>
-                        </svg>
-                    </div>
-                    <div class="logo-text">
-                        <h1><span>arq</span>MHOR</h1>
-                        <span>Arq. Oswaldo Rafael Martínez Hidalgo</span>
-                    </div>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#servicios">Servicios</a></li>
-                        <li><a href="#ubicacion">Ubicación</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                    </ul>
-                </nav>
-                <div class="mobile-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+            <div class="header-contact">
+                <a href="tel:+5804261352908"> +58 (0426) 1352908</a>
+                <a href="mailto:arqmhor2660@gmail.com">✉ arqmhor2660@gmail.com</a>
             </div>
         </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#ubicacion">Ubicación</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- HERO -->
     <section class="hero" id="inicio">
-        <div class="container">
-            <div class="hero-content">
-                <span class="hero-subtitle">Firma Consultora de Servicios Periciales</span>
-                <h2><span>arqMHOR</span> | Servicio de Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos</h2>
-                <p>Dictámenes periciales y valoraciones inmobiliarias de precisión técnica, alineadas estrictamente al marco legal (Sentencia 582-SCC-TSJ-07/10/2025) y normativo de la República Bolivariana de Venezuela.</p>
-                <a href="#contacto" class="cta-button">Solicitar Consulta Pericial</a>
-            </div>
+        <div class="hero-content">
+            <div class="hero-subtitle-top">Firma Consultora de Servicios Periciales</div>
+            <h2>arq<span class="highlight">MH</span>OR | Servicio de Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos</h2>
+            <p>Dictámenes periciales y valoraciones inmobiliarias de precisión técnica, alineadas estrictamente al marco legal (Sentencia 582-SCC-TSJ-07/10/2025) y normativo de la República Bolivariana de Venezuela.</p>
+            <a href="#contacto" class="cta-button">Solicitar Consulta Pericial</a>
         </div>
     </section>
 
@@ -854,7 +789,7 @@
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon">📊</div>
+                    <div class="service-icon"></div>
                     <h4>Avalúos Inmobiliarios Urbanos y Rurales</h4>
                     <p>Valoraciones inmobiliarias con blindaje legal y técnico completo. Avalúos alineados a la jurisprudencia de la Sentencia 582-SCC-TSJ del 07/10/2025 y parámetros sismorresistentes de la Norma COVENIN 1756:2001 / FUNVISIS. Máxima precisión en valoraciones para fines judiciales, bancarios y fiscales.</p>
                     <span class="norm-reference">Sentencia 582-SCC-TSJ-07/10/2025 | COVENIN 1756:2001</span>
@@ -870,35 +805,29 @@
                 <div class="location-info">
                     <h3>Ubicación y Área de Influencia</h3>
                     
-                    <div class="location-details">
-                        <div class="location-item">
-                            <div>
-                                <strong>Oficina Central</strong>
-                                <span>Carrera 5 entre Calles 14 y 15<br>
-                                Santa Bárbara, Código Postal 5210<br>
-                                Municipio Ezequiel Zamora, Estado Barinas<br>
-                                República Bolivariana de Venezuela</span>
-                            </div>
-                        </div>
-                        
-                        <div class="location-item">
-                            <div>
-                                <strong>Director Principal</strong>
-                                <span>Arquitecto Oswaldo Rafael Martínez Hidalgo<br>
-                                Registro CIV 280.406 | CAV 8.213</span>
-                            </div>
-                        </div>
+                    <div class="location-item">
+                        <strong>Oficina Central</strong>
+                        <span>Carrera 5 entre Calles 14 y 15<br>
+                        Santa Bárbara, Código Postal 5210<br>
+                        Municipio Ezequiel Zamora, Estado Barinas<br>
+                        República Bolivariana de Venezuela</span>
+                    </div>
+                    
+                    <div class="location-item">
+                        <strong>Director Principal</strong>
+                        <span>Arquitecto Oswaldo Rafael Martínez Hidalgo<br>
+                        Registro CIV 280.406 | CAV 8.213</span>
                     </div>
 
                     <div class="isochrone-legend">
-                        <h4>📍 Mapa de Isocronas - Cálculo de Honorarios Profesionales</h4>
+                        <h4> Mapa de Isocronas - Cálculo de Honorarios Profesionales</h4>
                         <p style="font-size: 0.85rem; margin-bottom: 15px; opacity: 0.9;">Según Tabulador SOITAVE-CIV Vigente</p>
                         
                         <div class="zone-item">
                             <div class="zone-dot zone-local"></div>
                             <div>
                                 <strong>Zona Local (0-25 km)</strong><br>
-                                <small>0-30 min | Tabla base SOITAVE</small>
+                                <small style="opacity: 0.8;">0-30 min | Tabla base SOITAVE</small>
                             </div>
                         </div>
                         
@@ -906,7 +835,7 @@
                             <div class="zone-dot zone-regional"></div>
                             <div>
                                 <strong>Zona Regional (25-100 km)</strong><br>
-                                <small>30 min - 2h | +10% gastos reembolsables</small>
+                                <small style="opacity: 0.8;">30 min - 2h | +10% gastos reembolsables</small>
                             </div>
                         </div>
                         
@@ -914,29 +843,19 @@
                             <div class="zone-dot zone-national"></div>
                             <div>
                                 <strong>Zona Nacional (>100 km)</strong><br>
-                                <small>>2h | +10% + viáticos reales</small>
+                                <small style="opacity: 0.8;">>2h | +10% + viáticos reales</small>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="map-container">
+                <div class="map-section">
+                    <div class="map-header">
+                        Mapa de Isocronas — Zona de Influencia (Referencial)
+                    </div>
                     <div id="map"></div>
-                    <div class="map-watermark">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <rect fill="#999" width="100" height="100"/>
-                            <circle cx="50" cy="28" r="12" fill="#fff"/>
-                            <path d="M 35 42 L 35 68 L 42 68 L 42 52 L 50 60 L 58 52 L 58 68 L 65 68 L 65 42 Z" fill="#fff"/>
-                            <rect x="25" y="71" width="50" height="3" fill="#fff"/>
-                            <rect x="25" y="76" width="22" height="20" fill="#bbb"/>
-                            <rect x="49" y="76" width="22" height="20" fill="#bbb"/>
-                            <rect x="73" y="76" width="2" height="20" fill="#fff"/>
-                            <circle cx="82" cy="86" r="6" fill="#fff"/>
-                        </svg>
-                        <div class="map-watermark-text">
-                            arqMHOR
-                            <span>Georreferenciación Profesional</span>
-                        </div>
+                    <div class="map-footer">
+                        <p><strong>Nota técnica:</strong> El mapa de isocronas es referencial y representa los tiempos de desplazamiento desde la sede arqMHOR (Carrera 5 entre Calles 14 y 15) para el cálculo de Honorarios Profesionales del Arquitecto conforme al Tabulador SOITAVE-CIV vigente, con respecto al inmueble tasable, levantamiento de planos arquitectónicos u otros servicios especializados del proyecto ejecutivo en su conjunto.</p>
                     </div>
                 </div>
             </div>
@@ -948,7 +867,7 @@
         <div class="container">
             <div class="contact-content">
                 <div class="contact-form">
-                    <h3 style="color: var(--azul-oscuro); margin-bottom: 30px; font-size: 1.5rem;">Solicitar Consulta Pericial</h3>
+                    <h3>Solicitar Consulta Pericial</h3>
                     <form id="contactForm" action="https://formspree.io/f/xnqevjdr" method="POST">
                         <div class="form-group">
                             <label for="nombre">Nombre Completo *</label>
@@ -994,12 +913,12 @@
                     <h3>Información de Contacto</h3>
                     
                     <div class="contact-method">
-                        <h4>📞 Teléfono / WhatsApp</h4>
+                        <h4> Teléfono / WhatsApp</h4>
                         <a href="tel:+5804261352908">+58 (0426) 1352908</a>
                     </div>
                     
                     <div class="contact-method">
-                        <h4>📧 Correo Electrónico</h4>
+                        <h4> Correo Electrónico</h4>
                         <a href="mailto:arqmhor2660@gmail.com">arqmhor2660@gmail.com</a><br>
                         <a href="mailto:arqmhor.arquitectura.forense@gmail.com">arqmhor.arquitectura.forense@gmail.com</a>
                     </div>
@@ -1029,17 +948,15 @@
     <!-- FOOTER -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-credentials">
-                    <span>CIV 280.406</span>
-                    <span>CAV 8.213</span>
-                    <span>ASAPROVE 4.050</span>
-                    <span>SUDEBAN 5.678</span>
-                    <span>SUDEBIP 728</span>
-                </div>
-                <p style="color: var(--dorado); font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">arqMHOR</p>
-                <p style="color: var(--gris-platino); font-size: 0.9rem;">Arquitectura Forense • Auditoría Ambiental • Avalúos Inmobiliarios</p>
+            <div class="footer-credentials">
+                <span>CIV 280.406</span>
+                <span>CAV 8.213</span>
+                <span>ASAPROVE 4.050</span>
+                <span>SUDEBAN 5.678</span>
+                <span>SUDEBIP 728</span>
             </div>
+            <p style="color: var(--dorado); font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; font-family: 'Playfair Display', serif;">arqMHOR</p>
+            <p style="color: var(--gris-platino); font-size: 0.9rem;">Arquitectura Forense • Auditoría Ambiental • Avalúos Inmobiliarios</p>
             <div class="copyright">
                 <p>&copy; 2026 arqMHOR. Todos los derechos reservados.</p>
                 <p style="margin-top: 10px; font-size: 0.8rem;">Arq. Oswaldo Rafael Martínez Hidalgo | República Bolivariana de Venezuela</p>
@@ -1048,219 +965,129 @@
     </footer>
 
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <script>
-        // Coordenadas CORREGIDAS de la sede arqMHOR
-        const SEDE_LAT = 8.5394;
-        const SEDE_LNG = -70.2436;
-        const SEDE_NAME = "arqMHOR - Sede Principal";
-        const SEDE_ADDRESS = "Carrera 5 entre Calles 14 y 15, Santa Bárbara, Barinas 5210<br>Municipio Ezequiel Zamora";
+        // Esperar a que el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Coordenadas de la sede arqMHOR
+            const SEDE_LAT = 8.5394;
+            const SEDE_LNG = -70.2436;
 
-        // Inicializar mapa
-        const map = L.map('map', {
-            center: [SEDE_LAT, SEDE_LNG],
-            zoom: 16,
-            zoomControl: true,
-            attributionControl: true
-        });
-
-        // Capas base
-        const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap',
-            maxZoom: 19
-        });
-
-        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '© Esri',
-            maxZoom: 18
-        });
-
-        osmLayer.addTo(map);
-
-        // Control de capas
-        const baseMaps = {
-            "Mapa Calles": osmLayer,
-            "Satélite": satelliteLayer
-        };
-
-        L.control.layers(baseMaps, null, {
-            position: 'topright',
-            collapsed: false
-        }).addTo(map);
-
-        // Icono personalizado
-        const sedeIcon = L.divIcon({
-            className: 'custom-div-icon',
-            html: `<div style="
-                background: linear-gradient(135deg, #c9a961 0%, #b8944f 100%);
-                width: 30px;
-                height: 30px;
-                border-radius: 50% 50% 50% 0;
-                transform: rotate(-45deg);
-                border: 3px solid #1a2332;
-                box-shadow: 0 0 15px rgba(201, 169, 97, 0.6);
-            ">
-                <div style="
-                    background: white;
-                    width: 10px;
-                    height: 10px;
-                    border-radius: 50%;
-                    transform: rotate(45deg);
-                "></div>
-            </div>`,
-            iconSize: [30, 30],
-            iconAnchor: [15, 30],
-            popupAnchor: [0, -30]
-        });
-
-        // Marcador de la sede
-        const sedeMarker = L.marker([SEDE_LAT, SEDE_LNG], {icon: sedeIcon})
-            .addTo(map)
-            .bindPopup(`
-                <div style="min-width: 280px;">
-                    <h3 style="color: #1a2332; margin-bottom: 10px; font-size: 1.1rem;">${SEDE_NAME}</h3>
-                    <p style="margin-bottom: 8px; font-size: 0.9rem;">${SEDE_ADDRESS}</p>
-                    <p style="margin-bottom: 8px; font-size: 0.85rem; color: #5a6c7d;">
-                        <strong>Director:</strong> Arq. Oswaldo Rafael Martínez Hidalgo
-                    </p>
-                    <p style="margin-bottom: 8px; font-size: 0.85rem; color: #5a6c7d;">
-                        <strong>CIV:</strong> 280.406 | <strong>CAV:</strong> 8.213
-                    </p>
-                    <p style="font-size: 0.8rem; color: #c9a961; font-weight: 600;">
-                        📞 +58 (0426) 1352908
-                    </p>
-                </div>
-            `)
-            .openPopup();
-
-        // Isocronas
-        const isochrones = [
-            {
-                radius: 25000,
-                color: '#4CAF50',
-                fillColor: '#4CAF50',
-                fillOpacity: 0.15,
-                weight: 3,
-                name: 'Zona Local',
-                distance: '0-25 km',
-                time: '0-30 min',
-                factor: 'Tabla base SOITAVE'
-            },
-            {
-                radius: 100000,
-                color: '#FF9800',
-                fillColor: '#FF9800',
-                fillOpacity: 0.1,
-                weight: 3,
-                name: 'Zona Regional',
-                distance: '25-100 km',
-                time: '30 min - 2h',
-                factor: '+10% gastos reembolsables'
-            },
-            {
-                radius: 200000,
-                color: '#f44336',
-                fillColor: '#f44336',
-                fillOpacity: 0.05,
-                weight: 2,
-                dashArray: '10, 5',
-                name: 'Zona Nacional',
-                distance: '>100 km',
-                time: '>2h',
-                factor: '+10% + viáticos reales'
+            // Verificar que el contenedor del mapa existe
+            const mapContainer = document.getElementById('map');
+            if (!mapContainer) {
+                console.error('Contenedor del mapa no encontrado');
+                return;
             }
-        ];
 
-        isochrones.forEach(zone => {
+            // Inicializar mapa
+            const map = L.map('map', {
+                center: [SEDE_LAT, SEDE_LNG],
+                zoom: 12,
+                zoomControl: true
+            });
+
+            // Capa base OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Marcador de la sede
+            const sedeIcon = L.divIcon({
+                className: 'custom-marker',
+                html: '<div style="background: #3b82f6; width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.3);"></div>',
+                iconSize: [30, 30],
+                iconAnchor: [15, 30]
+            });
+
+            L.marker([SEDE_LAT, SEDE_LNG], {icon: sedeIcon})
+                .addTo(map)
+                .bindPopup('<strong>arqMHOR</strong><br>Carrera 5 entre Calles 14 y 15<br>Santa Bárbara, Barinas')
+                .openPopup();
+
+            // Círculos de isocronas - Estilo referencial (como en la imagen)
+            // Zona Local - Círculo pequeño dorado
             L.circle([SEDE_LAT, SEDE_LNG], {
-                color: zone.color,
-                fillColor: zone.fillColor,
-                fillOpacity: zone.fillOpacity,
-                radius: zone.radius,
-                weight: zone.weight,
-                dashArray: zone.dashArray || null
-            }).addTo(map).bindPopup(`
-                <div style="min-width: 200px;">
-                    <h4 style="color: ${zone.color}; margin-bottom: 8px;">${zone.name}</h4>
-                    <p style="margin-bottom: 5px; font-size: 0.9rem;"><strong>Distancia:</strong> ${zone.distance}</p>
-                    <p style="margin-bottom: 5px; font-size: 0.9rem;"><strong>Tiempo Est.:</strong> ${zone.time}</p>
-                    <p style="font-size: 0.85rem; color: #5a6c7d;"><strong>Factor:</strong> ${zone.factor}</p>
-                </div>
-            `);
-        });
+                color: '#c9a961',
+                fillColor: '#c9a961',
+                fillOpacity: 0.1,
+                radius: 25000,
+                weight: 2
+            }).addTo(map).bindPopup('Zona Local: 0-25 km<br>0-30 min | Tabla base SOITAVE');
 
-        // Escala
-        L.control.scale({
-            imperial: false,
-            metric: true,
-            maxWidth: 200,
-            position: 'bottomleft'
-        }).addTo(map);
+            // Zona Regional - Círculo mediano
+            L.circle([SEDE_LAT, SEDE_LNG], {
+                color: '#8a949e',
+                fillColor: '#8a949e',
+                fillOpacity: 0.05,
+                radius: 50000,
+                weight: 1
+            }).addTo(map).bindPopup('Zona Regional: 25-100 km<br>30 min - 2h');
 
-        // Leyenda
-        const legend = L.control({position: 'topright'});
-        legend.onAdd = function(map) {
-            const div = L.DomUtil.create('div', 'legend-control');
-            div.style.cssText = 'background: white; padding: 15px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); font-family: Montserrat, sans-serif; font-size: 12px; min-width: 180px;';
-            div.innerHTML = `
-                <strong style="color: #1a2332; display: block; margin-bottom: 12px; font-size: 13px;">📍 Zonas de Cobertura</strong>
-                <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                    <span style="display: inline-block; width: 15px; height: 15px; background: #4CAF50; border-radius: 50%; border: 2px solid #4CAF50;"></span>
-                    <span>Local (0-25 km)</span>
-                </div>
-                <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                    <span style="display: inline-block; width: 15px; height: 15px; background: #FF9800; border-radius: 50%; border: 2px solid #FF9800;"></span>
-                    <span>Regional (25-100 km)</span>
-                </div>
-                <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                    <span style="display: inline-block; width: 15px; height: 15px; background: #f44336; border-radius: 50%; border: 2px solid #f44336; border-style: dashed;"></span>
-                    <span>Nacional (>100 km)</span>
-                </div>
-                <div style="border-top: 1px solid #e0e6ed; padding-top: 10px; margin-top: 10px;">
-                    <strong style="color: #c9a961; font-size: 11px;">arqMHOR</strong>
-                    <span style="display: block; font-size: 10px; color: #8a949e;">Georreferenciación Profesional</span>
-                </div>
-            `;
-            return div;
-        };
-        legend.addTo(map);
+            // Zona Nacional - Círculo grande
+            L.circle([SEDE_LAT, SEDE_LNG], {
+                color: '#6b7280',
+                fillColor: '#6b7280',
+                fillOpacity: 0.03,
+                radius: 100000,
+                weight: 1,
+                dashArray: '5, 5'
+            }).addTo(map).bindPopup('Zona Nacional: >100 km<br>>2h + viáticos');
 
-        // Formulario
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Enviando...';
-            submitBtn.disabled = true;
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    alert('✅ Su solicitud ha sido enviada exitosamente.\n\nNos pondremos en contacto con usted en menos de 24 horas.\n\nGracias por confiar en arqMHOR.');
-                    this.reset();
-                } else {
-                    alert('⚠️ Ha ocurrido un error al enviar el formulario.\n\nPor favor, inténtelo nuevamente o contáctenos directamente al +58 (0426) 1352908');
-                }
-            }).catch(error => {
-                alert('⚠️ Ha ocurrido un error.\n\nPor favor, contáctenos directamente al +58 (0426) 1352908');
-            }).finally(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+            // Forzar actualización del tamaño del mapa
+            setTimeout(function() {
+                map.invalidateSize();
+            }, 100);
+
+            // Formulario
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const submitBtn = this.querySelector('.submit-btn');
+                const originalText = submitBtn.textContent;
+                
+                submitBtn.textContent = 'Enviando...';
+                submitBtn.disabled = true;
+                
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        alert('✅ Su solicitud ha sido enviada exitosamente.\n\nNos pondremos en contacto con usted en menos de 24 horas.');
+                        this.reset();
+                    } else {
+                        alert('⚠️ Ha ocurrido un error. Por favor, contáctenos directamente al +58 (0426) 1352908');
+                    }
+                }).catch(error => {
+                    alert('⚠️ Error de conexión. Por favor, contáctenos directamente.');
+                }).finally(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
+            });
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
             });
         });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target
+    </script>
+</body>
+</html>
