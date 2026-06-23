@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="arqMHOR - Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos Inmobiliarios en Venezuela. Dictámenes periciales de precisión técnica.">
+    <meta name="author" content="arqMHOR">
+    <title>arqMHOR | Arquitectura Forense y Consultoría Profesional</title>
+    
+    <!-- Leaflet CSS para mapas -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Google Fonts - Vilane (simulada con Montserrat para geometría) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --azul-oscuro: #1a2332;
+            --azul-medio: #2c3e50;
+            --gris-platino: #8a949e;
+            --gris-claro: #f5f7fa;
+            --blanco: #ffffff;
+            --dorado: #c9a961;
+            --dorado-oscuro: #b8944f;
+            --texto-principal: #2c3e50;
+            --texto-secundario: #5a6c7d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--texto-principal);
+            line-height: 1.6;
+            background-color: var(--blanco);
+        }
+
+        /* HEADER Y NAVEGACIÓN */
+        header {
+            background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%);
+            color: var(--blanco);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            background-color: rgba(0,0,0,0.2);
+            padding: 8px 0;
+            font-size: 0.85rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-top-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .credentials {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .credential-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .credential-label {
+            color: var(--dorado);
+            font-weight: 600;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            background: var(--blanco);
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--blanco);
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--dorado);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: var(--dorado);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--blanco);
+            transition: 0.3s;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            margin-top: 120px;
+            background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%);
+            color: var(--blanco);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" x="0" y="0" width="100" height="100"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--gris-platino);
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--dorado);
+            color: var(--azul-oscuro);
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--dorado);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--dorado);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* SECCIÓN SERVICIOS */
+        .services {
+            padding: 80px 0;
+            background: var(--gris-claro);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h3 {
+            font-size: 2rem;
+            color: var(--azul-oscuro);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-title p {
+            color: var(--texto-secundario);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--blanco);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--dorado);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--azul-oscuro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--dorado);
+            font-size: 1.5rem;
+        }
+
+        .service-card h4 {
+            font-size: 1.3rem;
+            color: var(--azul-oscuro);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: var(--texto-secundario);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .norm-reference {
+            display: inline-block;
+            background: var(--gris-claro);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--azul-medio);
+            font-weight: 600;
+            margin-top: 15px;
+            border-left: 3px solid var(--dorado);
+        }
+
+        /* UBICACIÓN Y MAPA */
+        .location {
+            padding: 80px 0;
+            background: var(--blanco);
+        }
+
+        .location-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .location-info h3 {
+            font-size: 1.8rem;
+            color: var(--azul-oscuro);
+            margin-bottom: 20px;
+        }
+
+        .location-details {
+            margin-bottom: 30px;
+        }
+
+        .location-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--gris-claro);
+            border-radius: 8px;
+            border-left: 4px solid var(--dorado);
+        }
+
+        .location-item strong {
+            color: var(--azul-oscuro);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .location-item span {
+            color: var(--texto-secundario);
+            font-size: 0.95rem;
+        }
+
+        #map {
+            height: 500px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .isochrone-legend {
+            background: var(--azul-oscuro);
+            color: var(--blanco);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .isochrone-legend h4 {
+            color: var(--dorado);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .zone-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .zone-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid;
+        }
+
+        .zone-local { border-color: #4CAF50; background: rgba(76, 175, 80, 0.3); }
+        .zone-regional { border-color: #FF9800; background: rgba(255, 152, 0, 0.3); }
+        .zone-national { border-color: #f44336; background: rgba(244, 67, 54, 0.3); }
+
+        /* CONTACTO */
+        .contact {
+            padding: 80px 0;
+            background: var(--gris-claro);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-form {
+            background: var(--blanco);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--azul-oscuro);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--dorado);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: var(--azul-oscuro);
+            color: var(--blanco);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: var(--dorado);
+            color: var(--azul-oscuro);
+        }
+
+        .contact-info-side h3 {
+            font-size: 1.8rem;
+            color: var(--azul-oscuro);
+            margin-bottom: 30px;
+        }
+
+        .contact-method {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--blanco);
+            border-radius: 8px;
+            border-left: 4px solid var(--dorado);
+        }
+
+        .contact-method h4 {
+            color: var(--azul-oscuro);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .contact-method a,
+        .contact-method p {
+            color: var(--texto-secundario);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .contact-method a:hover {
+            color: var(--dorado);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--azul-oscuro);
+            color: var(--blanco);
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: 30px;
+        }
+
+        .footer-credentials {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--gris-platino);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gris-platino);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
+            .location-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero {
+                margin-top: 100px;
+                padding: 60px 0;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .credentials {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+
+            .section-title h3 {
+                font-size: 1.5rem;
+            }
+
+            .service-card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Animaciones sutiles */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .service-card,
+        .location-item,
+        .contact-method {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-content">
+                    <div class="credentials">
+                        <div class="credential-item">
+                            <span class="credential-label">CIV:</span>
+                            <span>280.406</span>
+                        </div>
+                        <div class="credential-item">
+                            <span class="credential-label">CAV:</span>
+                            <span>8.213</span>
+                        </div>
+                        <div class="credential-item">
+                            <span class="credential-label">ASAPROVE:</span>
+                            <span>4.050</span>
+                        </div>
+                        <div class="credential-item">
+                            <span class="credential-label">SUDEBAN:</span>
+                            <span>5.678</span>
+                        </div>
+                        <div class="credential-item">
+                            <span class="credential-label">SUDEBIP:</span>
+                            <span>728</span>
+                        </div>
+                    </div>
+                    <div class="header-contact">
+                        <span>📞 +58 (0426) 1352908</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="main-header">
+                <div class="logo">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%231a2332' width='100' height='100'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='40' fill='%23c9a961' text-anchor='middle' font-weight='bold'%3Earq%3C/text%3E%3C/svg%3E" alt="arqMHOR Logo">
+                    <div class="logo-text">
+                        <h1>arqMHOR</h1>
+                        <span>Arq. Oswaldo Rafael Martínez Hidalgo</span>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#ubicacion">Ubicación</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h2>arqMHOR | Servicio de Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos</h2>
+                <p>Dictámenes periciales y valoraciones inmobiliarias de precisión técnica, alineadas estrictamente al marco legal (Sentencia 582-SCC-TSJ-07/10/2025) y normativo de la República Bolivariana de Venezuela.</p>
+                <a href="#contacto" class="cta-button">Solicitar Consulta Pericial</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <div class="section-title">
+                <h3>Servicios Especializados</h3>
+                <p>Excelencia técnica y rigor legal en cada dictamen pericial</p>
+            </div>
+            <div class="services-grid">
+                <!-- Tarjeta 1: Arquitectura Forense -->
+                <div class="service-card">
+                    <div class="service-icon">🏛️</div>
+                    <h4>Arquitectura Forense</h4>
+                    <p>Análisis patológico de edificaciones y peritajes judiciales con metodología BIM bajo la norma internacional ISO 19.650. Evaluación técnica de patologías constructivas, determinación de causas de fallas estructurales y elaboración de dictámenes periciales para procesos judiciales.</p>
+                    <span class="norm-reference">ISO 19.650 | Normativa BIM Internacional</span>
+                </div>
+
+                <!-- Tarjeta 2: Auditoría Ambiental -->
+                <div class="service-card">
+                    <div class="service-icon">🌱</div>
+                    <h4>Auditoría Ambiental</h4>
+                    <p>Consultoría especializada basada en sistemas de gestión ambiental bajo el estándar actualizado ISO 14.001:2026. Evaluación de impacto ambiental, cumplimiento normativo y implementación de sistemas de gestión sostenible para proyectos arquitectónicos e industriales.</p>
+                    <span class="norm-reference">ISO 14.001:2026 | Gestión Ambiental</span>
+                </div>
+
+                <!-- Tarjeta 3: Avalúos Inmobiliarios -->
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h4>Avalúos Inmobiliarios Urbanos y Rurales</h4>
+                    <p>Valoraciones inmobiliarias con blindaje legal y técnico completo. Avalúos alineados a la jurisprudencia de la Sentencia 582-SCC-TSJ del 07/10/2025 y parámetros sismorresistentes de la Norma COVENIN 1756:2001 / FUNVISIS. Máxima precisión en valoraciones para fines judiciales, bancarios y fiscales.</p>
+                    <span class="norm-reference">Sentencia 582-SCC-TSJ-07/10/2025 | COVENIN 1756:2001</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UBICACIÓN Y MAPA -->
+    <section class="location" id="ubicacion">
+        <div class="container">
+            <div class="location-content">
+                <div class="location-info">
+                    <h3>Ubicación y Área de Influencia</h3>
+                    
+                    <div class="location-details">
+                        <div class="location-item">
+                            <div>
+                                <strong>Oficina Central</strong>
+                                <span>Carrera 5 entre Calles 14 y 15<br>
+                                Santa Bárbara, Código Postal 5210<br>
+                                Estado Barinas, República Bolivariana de Venezuela</span>
+                            </div>
+                        </div>
+                        
+                        <div class="location-item">
+                            <div>
+                                <strong>Director Principal</strong>
+                                <span>Arquitecto Oswaldo Rafael Martínez Hidalgo<br>
+                                Registro CIV 280.406 | CAV 8.213</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="isochrone-legend">
+                        <h4>📍 Mapa de Isocronas - Cálculo de Honorarios Profesionales</h4>
+                        <p style="font-size: 0.85rem; margin-bottom: 15px; opacity: 0.9;">Según Tabulador SOITAVE-CIV Vigente</p>
+                        
+                        <div class="zone-item">
+                            <div class="zone-dot zone-local"></div>
+                            <div>
+                                <strong>Zona Local (0-25 km)</strong><br>
+                                <small>0-30 min | Tabla base SOITAVE</small>
+                            </div>
+                        </div>
+                        
+                        <div class="zone-item">
+                            <div class="zone-dot zone-regional"></div>
+                            <div>
+                                <strong>Zona Regional (25-100 km)</strong><br>
+                                <small>30 min - 2h | +10% gastos reembolsables</small>
+                            </div>
+                        </div>
+                        
+                        <div class="zone-item">
+                            <div class="zone-dot zone-national"></div>
+                            <div>
+                                <strong>Zona Nacional (>100 km)</strong><br>
+                                <small>>2h | +10% + viáticos reales</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="map"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h3 style="color: var(--azul-oscuro); margin-bottom: 30px; font-size: 1.5rem;">Solicitar Consulta Pericial</h3>
+                    <form id="contactForm" action="https://formspree.io/f/xnqevjdr" method="POST">
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo *</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="empresa">Empresa / Institución</label>
+                            <input type="text" id="empresa" name="empresa">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telefono">Teléfono *</label>
+                            <input type="tel" id="telefono" name="telefono" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="servicio">Tipo de Servicio Requerido *</label>
+                            <select id="servicio" name="servicio" required>
+                                <option value="">Seleccione un servicio...</option>
+                                <option value="forense">Arquitectura Forense</option>
+                                <option value="ambiental">Auditoría Ambiental</option>
+                                <option value="avaluo">Avalúo Inmobiliario</option>
+                                <option value="otros">Otros Servicios</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mensaje">Descripción del Caso / Requerimiento</label>
+                            <textarea id="mensaje" name="mensaje" placeholder="Describa brevemente su requerimiento..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Enviar Solicitud</button>
+                    </form>
+                </div>
+
+                <div class="contact-info-side">
+                    <h3>Información de Contacto</h3>
+                    
+                    <div class="contact-method">
+                        <h4>📞 Teléfono / WhatsApp</h4>
+                        <a href="tel:+5804261352908">+58 (0426) 1352908</a>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h4>📧 Correo Electrónico</h4>
+                        <a href="mailto:arqmhor2660@gmail.com">arqmhor2660@gmail.com</a><br>
+                        <a href="mailto:arqmhor.arquitectura.forense@gmail.com">arqmhor.arquitectura.forense@gmail.com</a>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h4>🏢 Dirección Fiscal</h4>
+                        <p>Carrera 5 entre Calles 14 y 15<br>
+                        Santa Bárbara, Edo. Barinas<br>
+                        Código Postal 5210<br>
+                        Venezuela</p>
+                    </div>
+
+                    <div class="contact-method" style="background: var(--azul-oscuro); color: white;">
+                        <h4 style="color: var(--dorado);">Marco Legal de Referencia</h4>
+                        <p style="color: var(--gris-platino); font-size: 0.9rem;">
+                            • Sentencia 582-SCC-TSJ-07/10/2025<br>
+                            • Norma COVENIN 1756:2001 / FUNVISIS<br>
+                            • Tabulador SOITAVE-CIV Vigente<br>
+                            • ISO 19.650 (BIM) | ISO 14.001:2026
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-credentials">
+                    <span>CIV 280.406</span>
+                    <span>CAV 8.213</span>
+                    <span>ASAPROVE 4.050</span>
+                    <span>SUDEBAN 5.678</span>
+                    <span>SUDEBIP 728</span>
+                </div>
+                <p style="color: var(--dorado); font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">arqMHOR</p>
+                <p style="color: var(--gris-platino); font-size: 0.9rem;">Arquitectura Forense • Auditoría Ambiental • Avalúos Inmobiliarios</p>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 arqMHOR. Todos los derechos reservados.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">Arq. Oswaldo Rafael Martínez Hidalgo | República Bolivariana de Venezuela</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Inicializar mapa centrado en Santa Bárbara, Barinas
+        const map = L.map('map').setView([8.5333, -70.2167], 13);
+
+        // Capa base de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Icono personalizado para la sede
+        const customIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: "<div style='background-color: #c9a961; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #1a2332; box-shadow: 0 0 10px rgba(0,0,0,0.3);'></div>",
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+
+        // Marcador de la sede arqMHOR
+        const sedeMarker = L.marker([8.5333, -70.2167], {icon: customIcon})
+            .addTo(map)
+            .bindPopup('<strong>arqMHOR</strong><br>Carrera 5 entre Calles 14 y 15<br>Santa Bárbara, Barinas');
+
+        // Círculos de isocronas (zonas de cobertura)
+        // Zona Local: 0-25 km
+        const zonaLocal = L.circle([8.5333, -70.2167], {
+            color: '#4CAF50',
+            fillColor: '#4CAF50',
+            fillOpacity: 0.1,
+            radius: 25000,
+            weight: 2
+        }).addTo(map).bindPopup('Zona Local: 0-25 km<br>0-30 min');
+
+        // Zona Regional: 25-100 km
+        const zonaRegional = L.circle([8.5333, -70.2167], {
+            color: '#FF9800',
+            fillColor: '#FF9800',
+            fillOpacity: 0.1,
+            radius: 100000,
+            weight: 2
+        }).addTo(map).bindPopup('Zona Regional: 25-100 km<br>30 min - 2h');
+
+        // Zona Nacional: >100 km (representado con un círculo más grande)
+        const zonaNacional = L.circle([8.5333, -70.2167], {
+            color: '#f44336',
+            fillColor: '#f44336',
+            fillOpacity: 0.05,
+            radius: 200000,
+            weight: 2,
+            dashArray: '5, 10'
+        }).addTo(map).bindPopup('Zona Nacional: >100 km<br>>2h + viáticos');
+
+        // Leyenda del mapa
+        const legend = L.control({position: 'bottomright'});
+        legend.onAdd = function(map) {
+            const div = L.DomUtil.create('div', 'legend-control');
+            div.style.cssText = 'background: white; padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2); font-family: Montserrat, sans-serif; font-size: 12px;';
+            div.innerHTML = `
+                <strong style="color: #1a2332; display: block; margin-bottom: 8px;">Zonas de Cobertura</strong>
+                <div style="margin-bottom: 5px;"><span style="display: inline-block; width: 12px; height: 12px; background: #4CAF50; border-radius: 50%; margin-right: 5px;"></span>Local (0-25 km)</div>
+                <div style="margin-bottom: 5px;"><span style="display: inline-block; width: 12px; height: 12px; background: #FF9800; border-radius: 50%; margin-right: 5px;"></span>Regional (25-100 km)</div>
+                <div><span style="display: inline-block; width: 12px; height: 12px; background: #f44336; border-radius: 50%; margin-right: 5px;"></span>Nacional (>100 km)</div>
+            `;
+            return div;
+        };
+        legend.addTo(map);
+
+        // Manejo del formulario
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Enviando...';
+            submitBtn.disabled = true;
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert('Su solicitud ha sido enviada exitosamente. Nos pondremos en contacto con usted en menos de 24 horas.');
+                    this.reset();
+                } else {
+                    alert('Ha ocurrido un error al enviar el formulario. Por favor, inténtelo nuevamente o contáctenos directamente.');
+                }
+            }).catch(error => {
+                alert('Ha ocurrido un error. Por favor, contáctenos directamente al +58 (0426) 1352908');
+            }).finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Menú móvil (funcionalidad básica)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+            nav.style.position = 'absolute';
+            nav.style.top = '100%';
+            nav.style.left = '0';
+            nav.style.right = '0';
+            nav.style.background = 'var(--azul-oscuro)';
+            nav.style.padding = '20px';
+        });
+
+        // Animación al scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .location-item, .contact-method').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
