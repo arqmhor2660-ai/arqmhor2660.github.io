@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="arqMHOR - Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos Inmobiliarios en Venezuela. Dictámenes periciales de precisión técnica.">
+    <meta name="description" content="arqMHOR - Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos Inmobiliarios en Venezuela.">
     <meta name="author" content="arqMHOR">
     <title>arqMHOR | Arquitectura Forense y Consultoría Profesional</title>
     
@@ -56,10 +56,11 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .header-top {
-            background-color: rgba(0,0,0,0.2);
-            padding: 8px 0;
+        .header-top-bar {
+            background-color: rgba(255,255,255,0.05);
+            padding: 10px 0;
             font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .container {
@@ -73,23 +74,49 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 15px;
         }
 
         .credentials {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
         }
 
         .credential-item {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            font-size: 0.85rem;
         }
 
         .credential-label {
             color: var(--dorado);
             font-weight: 600;
+        }
+
+        .credential-value {
+            color: var(--gris-platino);
+            font-weight: 500;
+        }
+
+        .header-contact {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .header-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .header-contact-item:hover {
+            color: var(--dorado);
         }
 
         .main-header {
@@ -106,15 +133,11 @@
         }
 
         .logo-img {
-            width: 60px;
-            height: 60px;
-            background: var(--blanco);
-            border-radius: 8px;
-            padding: 5px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
 
         .logo-img svg {
@@ -123,17 +146,25 @@
         }
 
         .logo-text h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             letter-spacing: 2px;
             color: var(--blanco);
+            line-height: 1;
+        }
+
+        .logo-text h1 span {
+            color: var(--dorado);
+            font-weight: 300;
         }
 
         .logo-text span {
-            font-size: 0.75rem;
-            color: var(--dorado);
+            font-size: 0.7rem;
+            color: var(--gris-platino);
             text-transform: uppercase;
             letter-spacing: 1px;
+            display: block;
+            margin-top: 3px;
         }
 
         nav ul {
@@ -172,7 +203,7 @@
 
         /* HERO */
         .hero {
-            margin-top: 120px;
+            margin-top: 140px;
             background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%);
             color: var(--blanco);
             padding: 100px 0;
@@ -196,34 +227,53 @@
             position: relative;
             z-index: 1;
             max-width: 900px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .hero-subtitle {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--dorado);
+            margin-bottom: 20px;
+            display: block;
         }
 
         .hero h2 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.2;
             letter-spacing: 1px;
         }
 
+        .hero h2 span {
+            color: var(--dorado);
+            font-weight: 300;
+        }
+
         .hero p {
             font-size: 1.1rem;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: var(--gris-platino);
             line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-button {
             display: inline-block;
             background: var(--dorado);
             color: var(--azul-oscuro);
-            padding: 15px 40px;
+            padding: 18px 45px;
             text-decoration: none;
             font-weight: 600;
             border-radius: 4px;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             border: 2px solid var(--dorado);
         }
 
@@ -593,12 +643,12 @@
             }
 
             .hero {
-                margin-top: 100px;
+                margin-top: 120px;
                 padding: 60px 0;
             }
 
             .hero h2 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
 
             .credentials {
@@ -621,6 +671,10 @@
 
             .service-card {
                 padding: 30px 20px;
+            }
+
+            .header-contact {
+                display: none;
             }
         }
 
@@ -678,33 +732,40 @@
 
     <!-- HEADER -->
     <header>
-        <div class="header-top">
+        <div class="header-top-bar">
             <div class="container">
                 <div class="header-top-content">
                     <div class="credentials">
                         <div class="credential-item">
-                            <span class="credential-label">CIV:</span>
-                            <span>280.406</span>
+                            <span class="credential-label">CIV</span>
+                            <span class="credential-value">280.406</span>
                         </div>
                         <div class="credential-item">
-                            <span class="credential-label">CAV:</span>
-                            <span>8.213</span>
+                            <span class="credential-label">CAV</span>
+                            <span class="credential-value">8.213</span>
                         </div>
                         <div class="credential-item">
-                            <span class="credential-label">ASAPROVE:</span>
-                            <span>4.050</span>
+                            <span class="credential-label">ASAPROVE</span>
+                            <span class="credential-value">4.050</span>
                         </div>
                         <div class="credential-item">
-                            <span class="credential-label">SUDEBAN:</span>
-                            <span>5.678</span>
+                            <span class="credential-label">SUDEBAN</span>
+                            <span class="credential-value">5.678</span>
                         </div>
                         <div class="credential-item">
-                            <span class="credential-label">SUDEBIP:</span>
-                            <span>728</span>
+                            <span class="credential-label">SUDEBIP</span>
+                            <span class="credential-value">728</span>
                         </div>
                     </div>
                     <div class="header-contact">
-                        <span>📞 +58 (0426) 1352908</span>
+                        <a href="tel:+5804261352908" class="header-contact-item">
+                            <span>📞</span>
+                            <span>+58 (0426) 1352908</span>
+                        </a>
+                        <a href="mailto:arqmhor2660@gmail.com" class="header-contact-item">
+                            <span>✉️</span>
+                            <span>arqmhor2660@gmail.com</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -715,17 +776,29 @@
                     <div class="logo-img">
                         <!-- Logo Corporativo arqMHOR -->
                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <rect fill="#999999" width="100" height="100"/>
-                            <circle cx="50" cy="30" r="12" fill="#ffffff"/>
-                            <path d="M 35 45 L 35 70 L 50 58 L 65 70 L 65 45 Z" fill="#ffffff"/>
-                            <rect x="20" y="73" width="60" height="4" fill="#ffffff"/>
-                            <rect x="20" y="79" width="27" height="18" fill="#cccccc"/>
-                            <rect x="50" y="79" width="30" height="18" fill="#cccccc"/>
-                            <circle cx="82" cy="89" r="6" fill="#ffffff"/>
+                            <!-- Fondo gris -->
+                            <rect fill="#999" width="100" height="100"/>
+                            
+                            <!-- Círculo superior blanco -->
+                            <circle cx="50" cy="28" r="12" fill="#fff"/>
+                            
+                            <!-- Forma de M estilizada (estructura arquitectónica) -->
+                            <path d="M 35 42 L 35 68 L 42 68 L 42 52 L 50 60 L 58 52 L 58 68 L 65 68 L 65 42 Z" fill="#fff"/>
+                            
+                            <!-- Línea horizontal divisoria -->
+                            <rect x="25" y="71" width="50" height="3" fill="#fff"/>
+                            
+                            <!-- Grid inferior - 3 rectángulos -->
+                            <rect x="25" y="76" width="22" height="20" fill="#bbb"/>
+                            <rect x="49" y="76" width="22" height="20" fill="#bbb"/>
+                            <rect x="73" y="76" width="2" height="20" fill="#fff"/>
+                            
+                            <!-- Círculo inferior derecho -->
+                            <circle cx="82" cy="86" r="6" fill="#fff"/>
                         </svg>
                     </div>
                     <div class="logo-text">
-                        <h1>arqMHOR</h1>
+                        <h1><span>arq</span>MHOR</h1>
                         <span>Arq. Oswaldo Rafael Martínez Hidalgo</span>
                     </div>
                 </div>
@@ -750,7 +823,8 @@
     <section class="hero" id="inicio">
         <div class="container">
             <div class="hero-content">
-                <h2>arqMHOR | Servicio de Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos</h2>
+                <span class="hero-subtitle">Firma Consultora de Servicios Periciales</span>
+                <h2><span>arqMHOR</span> | Servicio de Consultoría Profesional en Arquitectura Forense, Auditoría Ambiental y Avalúos</h2>
                 <p>Dictámenes periciales y valoraciones inmobiliarias de precisión técnica, alineadas estrictamente al marco legal (Sentencia 582-SCC-TSJ-07/10/2025) y normativo de la República Bolivariana de Venezuela.</p>
                 <a href="#contacto" class="cta-button">Solicitar Consulta Pericial</a>
             </div>
@@ -850,13 +924,14 @@
                     <div id="map"></div>
                     <div class="map-watermark">
                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <rect fill="#999999" width="100" height="100"/>
-                            <circle cx="50" cy="30" r="12" fill="#ffffff"/>
-                            <path d="M 35 45 L 35 70 L 50 58 L 65 70 L 65 45 Z" fill="#ffffff"/>
-                            <rect x="20" y="73" width="60" height="4" fill="#ffffff"/>
-                            <rect x="20" y="79" width="27" height="18" fill="#cccccc"/>
-                            <rect x="50" y="79" width="30" height="18" fill="#cccccc"/>
-                            <circle cx="82" cy="89" r="6" fill="#ffffff"/>
+                            <rect fill="#999" width="100" height="100"/>
+                            <circle cx="50" cy="28" r="12" fill="#fff"/>
+                            <path d="M 35 42 L 35 68 L 42 68 L 42 52 L 50 60 L 58 52 L 58 68 L 65 68 L 65 42 Z" fill="#fff"/>
+                            <rect x="25" y="71" width="50" height="3" fill="#fff"/>
+                            <rect x="25" y="76" width="22" height="20" fill="#bbb"/>
+                            <rect x="49" y="76" width="22" height="20" fill="#bbb"/>
+                            <rect x="73" y="76" width="2" height="20" fill="#fff"/>
+                            <circle cx="82" cy="86" r="6" fill="#fff"/>
                         </svg>
                         <div class="map-watermark-text">
                             arqMHOR
@@ -977,7 +1052,6 @@
     
     <script>
         // Coordenadas CORREGIDAS de la sede arqMHOR
-        // Carrera 5 entre Calles 14 y 15, Santa Bárbara, Barinas
         const SEDE_LAT = 8.5394;
         const SEDE_LNG = -70.2436;
         const SEDE_NAME = "arqMHOR - Sede Principal";
@@ -1002,7 +1076,6 @@
             maxZoom: 18
         });
 
-        // Capa activa por defecto
         osmLayer.addTo(map);
 
         // Control de capas
@@ -1016,7 +1089,7 @@
             collapsed: false
         }).addTo(map);
 
-        // Icono personalizado para la sede
+        // Icono personalizado
         const sedeIcon = L.divIcon({
             className: 'custom-div-icon',
             html: `<div style="
@@ -1117,7 +1190,7 @@
             `);
         });
 
-        // Escala gráfica
+        // Escala
         L.control.scale({
             imperial: false,
             metric: true,
@@ -1190,50 +1263,4 @@
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Menú móvil
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const nav = document.querySelector('nav');
-        
-        mobileMenu.addEventListener('click', () => {
-            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-            nav.style.position = 'absolute';
-            nav.style.top = '100%';
-            nav.style.left = '0';
-            nav.style.right = '0';
-            nav.style.background = 'var(--azul-oscuro)';
-            nav.style.padding = '20px';
-        });
-
-        // Animaciones
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.service-card, .location-item, .contact-method').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+                if (target
